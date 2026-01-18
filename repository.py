@@ -15,7 +15,8 @@ class BookRepository:
             data (SBookAdd): Данные книги от клиента.
 
         Returns:
-            BooksModel: ORM-объект добавленной книги с заполненным id и дефолтными полями.
+            BooksModel: ORM-объект добавленной книги с заполненным id и
+            дефолтными полями.
         """
         book_dict = data.model_dump()
         book = BooksModel(**book_dict)
@@ -105,11 +106,11 @@ class BookRepository:
         Returns:
             None
         """
-        book = await BookRepository.get_by_id(session, book_id)
+        book = await BookRepository.get_book_by_id(session, book_id)
         if book is None:
             return
 
-        session.delete(book)
+        await session.delete(book)
         await session.commit()
 
         return
