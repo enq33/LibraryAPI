@@ -27,7 +27,7 @@ class BookRepository:
         return book
 
     @classmethod
-    async def get_all(cls, session: AsyncSession):
+    async def get_all_books(cls, session: AsyncSession):
         """
         Возвращает список всех книг из базы данных.
 
@@ -44,7 +44,7 @@ class BookRepository:
         return book_models
 
     @classmethod
-    async def get_by_id(cls, session: AsyncSession, book_id: int):
+    async def get_book_by_id(cls, session: AsyncSession, book_id: int):
         """
         Находит книгу по её ID.
 
@@ -79,11 +79,11 @@ class BookRepository:
         Returns:
             BooksModel | None: Обновлённый объект книги.
         """
-        book = await BookRepository.get_by_id(session, book_id)
+        book = await BookRepository.get_book_by_id(session, book_id)
         if book is None:
             return
 
-        book.title = data.title 
+        book.title = data.title
         book.author = data.author
         book.year = data.year
         book.pages = data.pages
@@ -91,7 +91,7 @@ class BookRepository:
 
         await session.commit()
 
-        return book
+        return
 
     @classmethod
     async def delete_book(cls, session: AsyncSession, book_id: int):
